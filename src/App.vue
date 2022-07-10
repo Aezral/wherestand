@@ -1,0 +1,28 @@
+<template>
+<h1>Presiona el botón</h1>
+<button v-on:click="setcookie">Este</button>
+</template>
+
+<script setup>
+
+const {inject} = require('vue')
+
+const $cookies = inject("$cookies");
+
+const setcookie = () => {
+  $cookies.set("prueba", "Valor de prueba");
+}
+
+
+</script>
+
+<style>
+#app {
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+</style>
