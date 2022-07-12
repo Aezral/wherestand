@@ -1,118 +1,137 @@
 <template>
-  <MDBContainer class="px-1">
-    <MDBCard class="mb-3 mx-auto" style="max-width: 500px">
-      <MDBCardBody>
-        <h1>Where stand?</h1>
-        <p>YBA Stand Management Tool</p>
-        <MDBCardText class="mt-3">
-          Add an account to have a registry of the stands you have
-        </MDBCardText>
-        <MDBRow class="mx-auto mt-1" style="max-width: 400px">
-          <MDBCol>
-            <MDBInput label="User" v-model="user_toadd" wrapperClass="mb-4" />
-          </MDBCol>
-          <MDBCol>
-            <MDBBtn color="dark" v-on:click="agregarcuenta()">Add</MDBBtn>
-          </MDBCol>
-        </MDBRow>
-      </MDBCardBody>
-    </MDBCard>
+  <div>
+    <MDBContainer class="px-1">
+      <MDBCard class="mb-3 mx-auto" style="max-width: 500px">
+        <MDBCardBody>
+          <h1>Where stand?</h1>
+          <p>YBA Stand Management Tool</p>
+          <MDBCardText class="mt-3">
+            Add an account to have a registry of the stands you have
+          </MDBCardText>
+          <MDBRow class="mx-auto mt-1" style="max-width: 400px">
+            <MDBCol>
+              <MDBInput label="User" v-model="user_toadd" wrapperClass="mb-4" />
+            </MDBCol>
+            <MDBCol>
+              <MDBBtn color="dark" v-on:click="agregarcuenta()">Add</MDBBtn>
+            </MDBCol>
+          </MDBRow>
+        </MDBCardBody>
+      </MDBCard>
 
-    <MDBRow
-      v-for="line of Math.ceil(cuentas.size / 3)"
-      :key="line"
-      class="mx-auto"
-    >
-      <MDBCol
-        class="col-xxl-4 mb-1"
-        v-for="cuenta of Array.from(cuentas.entries()).slice(
-          3 * (line - 1),
-          line * 3
-        )"
-        :key="cuenta"
+      <MDBRow
+        v-for="line of Math.ceil(cuentas.size / 3)"
+        :key="line"
+        class="mx-auto"
       >
-        <MDBCard class="mb-4">
-          <MDBCardBody>
-            <MDBCardTitle
-              ><MDBRow class="mx-auto">
-                <MDBCol col="4"> </MDBCol>
-                <MDBCol col="4">
-                  <MDBCardTitle class="mt-2">{{ cuenta[0] }}</MDBCardTitle>
-                </MDBCol>
-                <MDBCol col="4" align="left">
-                  <MDBBtn
-                    floating
-                    v-on:click="eliminarcuenta(cuenta[0])"
-                    color="light"
-                    ><i class="fas fa-times"></i
-                  ></MDBBtn>
-                </MDBCol> </MDBRow
-            ></MDBCardTitle>
-
-            <MDBRow class="mx-auto mt-4" style="max-width: 400px">
-              <MDBCol col="8">
-                <MDBDropdown v-model="selectstand[cuenta[0]]">
-                  <MDBDropdownToggle
-                    color="light"
-                    @click="selectstand[cuenta[0]] = !selectstand[cuenta[0]]"
-                  >
-                    {{ standlist[standselected[cuenta[0]]] || "Select stand" }}
-                  </MDBDropdownToggle>
-                  <MDBDropdownMenu aria-labelledby="dropdownMenuButton">
-                    <MDBDropdownItem
-                      v-for="stand of Object.entries(standlist)"
-                      :key="stand"
-                      tag="button"
-                      v-on:click="
-                        seleccionarstand(stand[0], cuenta[0]);
-                        selectstand[cuenta[0]] = !selectstand[cuenta[0]];
-                      "
-                      >{{ stand[1] }}</MDBDropdownItem
-                    >
-                  </MDBDropdownMenu>
-                </MDBDropdown>
-              </MDBCol>
-              <MDBCol col="4" align="left">
-                <MDBBtn
-                  color="dark"
-                  v-on:click="agregarstand(standselected[cuenta[0]], cuenta[0])"
-                  >Add</MDBBtn
-                >
-              </MDBCol>
-            </MDBRow>
-
-            <MDBCard
-              class="mt-5 shadow-3-strong"
-              v-for="stand of cuenta[1]"
-              :key="stand"
-            >
-              <MDBCardBody>
-                <MDBRow>
-                  <MDBCol
-                    style="
-                      display: flex;
-                      align-items: center;
-                      justify-content: center;
-                    "
-                  >
-                    <b> {{ standlist[stand] }}</b>
+        <MDBCol
+          class="col-xxl-4 mb-1"
+          v-for="cuenta of Array.from(cuentas.entries()).slice(
+            3 * (line - 1),
+            line * 3
+          )"
+          :key="cuenta"
+        >
+          <MDBCard class="mb-4">
+            <MDBCardBody>
+              <MDBCardTitle
+                ><MDBRow class="mx-auto">
+                  <MDBCol col="4"> </MDBCol>
+                  <MDBCol col="4">
+                    <MDBCardTitle class="mt-2">{{ cuenta[0] }}</MDBCardTitle>
                   </MDBCol>
-                  <MDBCol>
+                  <MDBCol col="4" align="left">
                     <MDBBtn
-                      v-on:click="eliminarstand(cuenta[0], stand)"
                       floating
+                      v-on:click="eliminarcuenta(cuenta[0])"
                       color="light"
                       ><i class="fas fa-times"></i
                     ></MDBBtn>
-                  </MDBCol>
-                </MDBRow>
-              </MDBCardBody>
-            </MDBCard>
-          </MDBCardBody>
-        </MDBCard>
-      </MDBCol>
-    </MDBRow>
-  </MDBContainer>
+                  </MDBCol> </MDBRow
+              ></MDBCardTitle>
+
+              <MDBRow class="mx-auto mt-4" style="max-width: 400px">
+                <MDBCol col="8">
+                  <MDBDropdown v-model="selectstand[cuenta[0]]">
+                    <MDBDropdownToggle
+                      color="light"
+                      @click="selectstand[cuenta[0]] = !selectstand[cuenta[0]]"
+                    >
+                      {{
+                        standlist[standselected[cuenta[0]]] || "Select stand"
+                      }}
+                    </MDBDropdownToggle>
+                    <MDBDropdownMenu aria-labelledby="dropdownMenuButton">
+                      <MDBDropdownItem
+                        v-for="stand of Object.entries(standlist)"
+                        :key="stand"
+                        tag="button"
+                        v-on:click="
+                          seleccionarstand(stand[0], cuenta[0]);
+                          selectstand[cuenta[0]] = !selectstand[cuenta[0]];
+                        "
+                        >{{ stand[1] }}</MDBDropdownItem
+                      >
+                    </MDBDropdownMenu>
+                  </MDBDropdown>
+                </MDBCol>
+                <MDBCol col="4" align="left">
+                  <MDBBtn
+                    color="dark"
+                    v-on:click="
+                      agregarstand(standselected[cuenta[0]], cuenta[0])
+                    "
+                    >Add</MDBBtn
+                  >
+                </MDBCol>
+              </MDBRow>
+
+              <MDBCard
+                class="mt-5 shadow-3-strong"
+                v-for="stand of cuenta[1]"
+                :key="stand"
+              >
+                <MDBCardBody>
+                  <MDBRow>
+                    <MDBCol
+                      style="
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                      "
+                    >
+                      <b> {{ standlist[stand] }}</b>
+                    </MDBCol>
+                    <MDBCol>
+                      <MDBBtn
+                        v-on:click="eliminarstand(cuenta[0], stand)"
+                        floating
+                        color="light"
+                        ><i class="fas fa-times"></i
+                      ></MDBBtn>
+                    </MDBCol>
+                  </MDBRow>
+                </MDBCardBody>
+              </MDBCard>
+            </MDBCardBody>
+          </MDBCard>
+        </MDBCol>
+      </MDBRow>
+    </MDBContainer>
+    <div class="cookie text-dark"><b>Where Stand?</b> uses cookies to save data in the device.</div>
+    <div class="credits text-dark mb-3 ms-3">
+      Aezral#8160<i class="fab fa-discord ms-2"></i>
+    </div>
+    <a     href="https://github.com/Aezral/wherestand"
+    target="_blank">    <MDBIcon
+
+      class="credits2 text-dark  mb-3 me-3"
+      icon="github"
+      iconStyle="fab"
+      size="2x"
+    /></a>
+
+  </div>
 </template>
 
 <script setup>
@@ -133,6 +152,7 @@ import {
   MDBDropdownToggle,
   MDBDropdownMenu,
   MDBDropdownItem,
+  MDBIcon,
 } from "mdb-vue-ui-kit";
 
 import cookies from "vue-cookies";
@@ -226,5 +246,24 @@ body::-webkit-scrollbar {
 .v-enter-from,
 .v-leave-to {
   opacity: 0;
+}
+
+.credits {
+  position: absolute;
+  bottom: 0;
+  left: 10px;
+  font-size: larger;
+}
+
+.credits2 {
+  position: absolute;
+  bottom: 0;
+  right: 10px;
+}
+
+.cookie{
+  position:absolute;
+  bottom:10px;
+  left: 0; right: 0;
 }
 </style>
