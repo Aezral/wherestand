@@ -118,10 +118,12 @@
         </MDBCol>
       </MDBRow>
     </MDBContainer>
-    <div class="cookie text-dark"><b>Where Stand?</b> uses cookies to save data in the device.</div>
+  <div class="footer">
+        <div class="cookie text-dark"><b>Where Stand?</b> uses cookies to save data in the device.</div>
     <div class="credits text-dark mb-3 ms-3">
       Aezral#8160<i class="fab fa-discord ms-2"></i>
     </div>
+  </div>
     <a     href="https://github.com/Aezral/wherestand"
     target="_blank">    <MDBIcon
 
@@ -248,22 +250,26 @@ body::-webkit-scrollbar {
   opacity: 0;
 }
 
+.footer{
+  bottom:0
+}
+
 .credits {
   position: absolute;
-  bottom: 0;
+
   left: 10px;
   font-size: larger;
 }
 
 .credits2 {
   position: absolute;
-  bottom: 0;
+
   right: 10px;
 }
 
 .cookie{
   position:absolute;
-  bottom:10px;
+
   left: 0; right: 0;
 }
 </style>
