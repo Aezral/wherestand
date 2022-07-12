@@ -1,7 +1,8 @@
 <template>
   <div>
     <MDBContainer class="px-1" style="margin-bottom:16rem !important">
-      <MDBCard class="mb-3 mx-auto" style="max-width: 500px">
+    <MDBContainer>
+            <MDBCard class="mb-3 mx-auto" style="max-width: 500px; ">
         <MDBCardBody>
           <h1>Where stand?</h1>
           <p>YBA Stand Management Tool</p>
@@ -18,6 +19,7 @@
           </MDBRow>
         </MDBCardBody>
       </MDBCard>
+    </MDBContainer>
 
       <MDBRow
         v-for="line of Math.ceil(cuentas.size / 3)"
