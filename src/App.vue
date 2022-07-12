@@ -1,6 +1,6 @@
 <template>
   <div>
-    <MDBContainer class="px-1">
+    <MDBContainer class="px-1" style="margin-bottom:16rem !important">
       <MDBCard class="mb-3 mx-auto" style="max-width: 500px">
         <MDBCardBody>
           <h1>Where stand?</h1>
@@ -118,21 +118,7 @@
         </MDBCol>
       </MDBRow>
     </MDBContainer>
-  <div class="footer">
-        <div class="cookie text-dark"><b>Where Stand?</b> uses cookies to save data in the device.</div>
-    <div class="credits text-dark mb-3 ms-3">
-      Aezral#8160<i class="fab fa-discord ms-2"></i>
-    </div>
-  </div>
-    <a     href="https://github.com/Aezral/wherestand"
-    target="_blank">    <MDBIcon
-
-      class="credits2 text-dark  mb-3 me-3"
-      icon="github"
-      iconStyle="fab"
-      size="2x"
-    /></a>
-
+    <vFooter></vFooter>
   </div>
 </template>
 
@@ -154,10 +140,11 @@ import {
   MDBDropdownToggle,
   MDBDropdownMenu,
   MDBDropdownItem,
-  MDBIcon,
 } from "mdb-vue-ui-kit";
 
 import cookies from "vue-cookies";
+
+import vFooter from './components/vFooter.vue'
 
 const user_toadd = ref("");
 
@@ -250,26 +237,5 @@ body::-webkit-scrollbar {
   opacity: 0;
 }
 
-.footer{
-  bottom:0
-}
 
-.credits {
-  position: absolute;
-
-  left: 10px;
-  font-size: larger;
-}
-
-.credits2 {
-  position: absolute;
-
-  right: 10px;
-}
-
-.cookie{
-  position:absolute;
-
-  left: 0; right: 0;
-}
 </style>
