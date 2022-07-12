@@ -7,7 +7,7 @@
         <MDBCardText class="mt-3">
           Add an account to have a registry of the stands you have
         </MDBCardText>
-        <MDBRow tag="form" class="mx-auto mt-1" style="max-width: 400px">
+        <MDBRow class="mx-auto mt-1" style="max-width: 400px">
           <MDBCol>
             <MDBInput label="User" v-model="user_toadd" wrapperClass="mb-4" />
           </MDBCol>
@@ -49,12 +49,12 @@
                 </MDBCol> </MDBRow
             ></MDBCardTitle>
 
-            <MDBRow tag="form" class="mx-auto mt-4" style="max-width: 400px">
+            <MDBRow class="mx-auto mt-4" style="max-width: 400px">
               <MDBCol col="8">
-                <MDBDropdown v-model="selectstand[cuenta]">
+                <MDBDropdown v-model="selectstand[cuenta[0]]">
                   <MDBDropdownToggle
                     color="light"
-                    @click="selectstand[cuenta] = !selectstand[cuenta]"
+                    @click="selectstand[cuenta[0]] = !selectstand[cuenta[0]]"
                   >
                     {{ standlist[standselected[cuenta[0]]] || "Select stand" }}
                   </MDBDropdownToggle>
@@ -65,7 +65,7 @@
                       tag="button"
                       v-on:click="
                         seleccionarstand(stand[0], cuenta[0]);
-                        selectstand[cuenta] = !selectstand[cuenta];
+                        selectstand[cuenta[0]] = !selectstand[cuenta[0]];
                       "
                       >{{ stand[1] }}</MDBDropdownItem
                     >
@@ -116,7 +116,7 @@
 </template>
 
 <script setup>
-import { onBeforeMount, ref} from "vue";
+import { onBeforeMount, ref } from "vue";
 import standlist from "./assets/stands.json";
 
 import {
@@ -165,7 +165,8 @@ function agregarcuenta() {
 }
 
 function seleccionarstand(stand, cuenta) {
-  standselected.value[cuenta] = Number(stand[0]);
+  standselected.value[cuenta] = Number(stand);
+  console.log(standselected.value[cuenta]);
 }
 
 function agregarstand(stand, cuenta) {
@@ -180,30 +181,19 @@ function saveinfo() {
   var obj = Object.fromEntries(cuentas.value);
   const final = JSON.stringify(obj);
 
-  cookies.set("accdata", final, '365d');
+  cookies.set("accdata", final, "365d");
 }
 
-function loadinfo(){
-  let info = cookies.get('accdata');
+function loadinfo() {
+  let info = cookies.get("accdata");
 
-  info = new Map(Object.entries(info))
+  info = new Map(Object.entries(info));
 
   cuentas.value = info;
-
 }
-
-onBeforeMount(()=>{
+onBeforeMount(() => {
   loadinfo();
-})
-
-// window.onbeforeunload = () => {};
-// const {inject} = require('vue')
-
-// const $cookies = inject("$cookies");
-
-// const setcookie = () => {
-//   $cookies.set("prueba", "Valor de prueba");
-// }
+});
 </script>
 
 <style>
@@ -222,7 +212,7 @@ body::-webkit-scrollbar {
 
 .dropdown-menu {
   overflow: auto;
-  height: 300px !important;
+  height: 200px !important;
 }
 
 .dropdown-menu::-webkit-scrollbar {
